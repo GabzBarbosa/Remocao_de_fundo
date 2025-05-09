@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
+    <title>Alterar o Fundo da Imagem</title>
+</head>
+
+ <header>
+        <img src="./imagem/Camada.png" alt="Logo" width="100" height="100">
+        <h1>Alterar o Fundo da Imagem</h1>
+    </header>
+
+<body>
+
+  <h2>Faça o upload do arquivo</h2>
+  <input type="file" id="upload" accept="image/*"><br><br>
+
+
+  <h3>Escolha a cor de fundo:</h3>
+  <input type="color" id="bgColor" value="#ffffff"><br><br>
+
+  <button onclick="processarImagem()">Alterar Fundo</button>
+
+  <br><br>
+  <div Resultados>
+    <h4>Nova Imagem:</h4>
+    <img id="imagemOriginal" src="" alt="Imagem Original" style="max-width: 100px; display:none;">
+    <canvas id="canvas" style="display:none;"></canvas>
+  <br>
+  <a id="downloadLink" style="display:none;" download="imagem-final.jpg">Baixar imagem</a>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
