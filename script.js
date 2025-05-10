@@ -10,40 +10,65 @@ async function processarImagem() {
     return;
   }
 
-  const formData = new FormData();
-  formData.append('image_file', fileInput.files[0]);
-  formData.append('size', 'auto');
-
-  const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-    method: 'POST',
-    headers: {
-      'X-Api-Key': 'gbm5KA6XCt9HNjSycLQgJ5Kb' // Chave de API do Remove.bg
-    },
-    body: formData
-  });
-
-  if (response.status != 200) {
-    alert('Erro ao remover fundo.');
+  const file = fileInput.files[0];
+  if (!file.type.startsWith('image/')) {
+    alert('Por favor, envie um arquivo de imagem válido.');
     return;
   }
 
-  const blob = await response.blob();
-  const img = new Image();
-  img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
+  const formData = new FormData();
+  formData.append('image_file', file);
+  formData.append('size', 'auto');
 
-    // Aplica o fundo colorido
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0);
+  try {
+    // Exibe indicador de carregamento
+    const loadingIndicator = document.createElement('p');
+    loadingIndicator.id = 'loading';
+    loadingIndicator.textContent = 'Processando imagem...';
+    document.body.appendChild(loadingIndicator);
 
-    canvas.style.display = 'block';
-    canvas.toBlob(function(blob) {
-      const url = URL.createObjectURL(blob);
-      downloadLink.href = url;
-      downloadLink.style.display = 'inline';
-    }, 'image/jpeg');
-  };
-  img.src = URL.createObjectURL(blob);
+    // Realiza a requisição
+    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
+      headers: {
+        'X-Api-Key': 'SUA_CHAVE_AQUI' // Substitua por uma solução segura
+      },
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro ao remover fundo: ${response.statusText}`);
+    }
+
+    const blob = await response.blob();
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Aplica o fundo colorido
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+
+      canvas.style.display = 'block';
+      canvas.toBlob(function (blob) {
+        const url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.style.display = 'inline';
+        URL.revokeObjectURL(url); // Libera memória
+      }, 'image/jpeg');
+    };
+    img.src = URL.createObjectURL(blob);
+
+  } catch (error) {
+    console.error('Erro ao processar imagem:', error);
+    alert('Ocorreu um erro ao processar a imagem. Tente novamente.');
+  } finally {
+    // Remove indicador de carregamento
+    const loadingIndicator = document.getElementById('loading');
+    if (loadingIndicator) {
+      loadingIndicator.remove();
+    }
+  }
 }
