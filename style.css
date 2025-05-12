@@ -26,7 +26,6 @@ header {
     color: rgb(255, 255, 255);
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
@@ -54,9 +53,9 @@ input {
     height: 40px;
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
-    font-size: 14px;
-    padding: 0 15px;
-    margin: 10px 0;
+    font-size: 12px;
+    padding: 15px;
+    margin-top: 10px;
     transition: border-color 0.3s;
     width: 80%;
     max-width: 400px;
@@ -73,9 +72,9 @@ button {
     background-color: rgb(105, 4, 126);
     color: rgb(248, 248, 248);
     font-size: 14px;
-    padding: 10px 30px;
+    padding: 15px;
+    margin-top: 10px;
     cursor: pointer;
-    margin: 10px 0;
     transition: background-color 0.3s;
 }
 
