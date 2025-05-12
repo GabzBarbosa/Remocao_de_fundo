@@ -31,7 +31,7 @@ async function processarImagem() {
     const response = await fetch('https://api.remove.bg/v1.0/removebg', {
       method: 'POST',
       headers: {
-        'X-Api-Key': 'SUA_CHAVE_AQUI' // Substitua por uma solução segura
+        'X-Api-Key': 'SUA_CHAVE_AQUI' // Realize a requisição da chave através do link disponivel no readme e inclua aqui
       },
       body: formData
     });
